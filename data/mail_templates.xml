@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Email template for confirming receipt of a vendor application -->
+    <record id="email_template_vendor_application_received" model="mail.template">
+        <field name="name">Vendor Application Received</field>
+        <field name="model_id" ref="food_truck_festival.model_food_vendor_application"/>
+        <field name="subject">[${object.name}] Application Received for ${object.event_id.name}</field>
+        <field name="email_from">${(object.event_id.company_id.email or user.email) | safe}</field>
+        <field name="email_to">${object.email_fallback or object.partner_id.email}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <![CDATA[
+            <p>Dear ${object.company_name_fallback or object.partner_id.name},</p>
+            <p>Thank you for applying to participate at the <strong>${object.event_id.name}</strong>.</p>
+            <p>Your application number is <strong>${object.name}</strong>. Our team will review your submission and contact you shortly.</p>
+            <p>Best regards,<br/>The Festival Organisers</p>
+            ]]>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Portal list of vendor applications -->
+    <template id="portal_applications" name="My Applications" inherit_id="portal.portal_layout">
+        <xpath expr="//t[@t-call='portal.portal_content']" position="replace">
+            <t t-call="portal.portal_breadcrumbs"/>
+            <div class="o_portal_page">
+                <h2>My Vendor Applications</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Event</th>
+                            <th>Booth</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="applications" t-as="app">
+                            <tr>
+                                <td><t t-esc="app.name"/></td>
+                                <td><t t-esc="app.event_id.name"/></td>
+                                <td><t t-esc="app.booth_id.name or '-'"/></td>
+                                <td><t t-esc="app.state"/></td>
+                                <td><a t-att-href="'/my/food/%s' % app.id" class="btn btn-sm btn-primary">View</a></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Portal detail of one application -->
+    <template id="portal_application_detail" name="Application Detail" inherit_id="portal.portal_layout">
+        <xpath expr="//t[@t-call='portal.portal_content']" position="replace">
+            <t t-call="portal.portal_breadcrumbs"/>
+            <div class="o_portal_page">
+                <h2>Application <t t-esc="application.name"/></h2>
+                <p><strong>Event:</strong> <t t-esc="application.event_id.display_name"/></p>
+                <p><strong>Booth:</strong> <t t-esc="application.booth_id.name or '-'"/></p>
+                <p><strong>Status:</strong> <t t-esc="application.state"/></p>
+                <p><strong>Subtotal:</strong> <t t-esc="application.computed_subtotal"/> <t t-esc="application.currency_id.symbol"/></p>
+                <t t-if="application.computed_total">
+                    <p><strong>Total:</strong> <t t-esc="application.computed_total"/> <t t-esc="application.currency_id.symbol"/></p>
+                </t>
+                <t t-if="application.state in ['contract_sent','signed','invoiced','checked_in','closed']">
+                    <p><a t-att-href="application.sign_request_id and application.sign_request_id.access_token and ('/sign/document/%s' % application.sign_request_id.access_token) or '#'" class="btn btn-secondary">View Contract</a></p>
+                </t>
+                <t t-if="application.invoice_id">
+                    <p><a t-att-href="'/my/invoices/%s' % application.invoice_id.id" class="btn btn-secondary">View Invoice</a></p>
+                </t>
+                <t t-if="application.state in ['invoiced','checked_in','closed']">
+                    <p><a t-att-href="application.get_checkin_url()" class="btn btn-primary">Check‑In QR</a></p>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Application form template for website -->
+    <template id="application_form" name="Food Vendor Application Form">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h1>Apply as a Vendor</h1>
+                <t t-if="event">
+                    <p>You are applying for event: <strong><t t-esc="event.name"/></strong></p>
+                </t>
+                <form action="/food/apply" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input type="hidden" name="event_id" t-att-value="event.id"/>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" name="company_name" required="required" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>VAT</label>
+                        <input type="text" name="vat" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="phone" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required="required" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Menu Description</label>
+                        <textarea name="menu_description" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Truck Size (WxD meters)</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" step="0.1" name="truck_width" placeholder="Width" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <input type="number" step="0.1" name="truck_depth" placeholder="Depth" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Power Required (kW)</label>
+                        <input type="number" step="0.1" name="needs_power_kw" class="form-control"/>
+                    </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="needs_water" class="form-check-input" id="needs_water"/>
+                            <label class="form-check-label" for="needs_water">Needs Water</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="needs_sewage" class="form-check-input" id="needs_sewage"/>
+                            <label class="form-check-label" for="needs_sewage">Needs Sewage</label>
+                        </div>
+                    <t t-if="days">
+                        <div class="form-group mt-3">
+                            <label>Select Attendance Days</label>
+                            <div class="row">
+                                <t t-foreach="days" t-as="day">
+                                    <div class="col-md-2">
+                                        <input type="checkbox" t-att-name="'day_%s' % day.id" class="form-check-input" id="day_{{day.id}}"/>
+                                        <label class="form-check-label" t-att-for="'day_%s' % day.id"><t t-esc="day.date"/></label>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <!-- Thank you page -->
+    <template id="application_thankyou" name="Application Thank You">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2>Thank you for your application!</h2>
+                <p>We have received your submission. Our team will review it and get back to you.</p>
+                <a href="/" class="btn btn-primary">Back to Home</a>
+            </div>
+        </t>
+    </template>
+
+    <!-- Check‑in confirmation page -->
+    <template id="checkin_confirmation" name="Check‑In Confirmation">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2>Check‑In Successful</h2>
+                <p>Thank you, <t t-esc="application.partner_id.name or application.company_name_fallback"/>. You have been checked in for <strong><t t-esc="application.event_id.name"/></strong>.</p>
+            </div>
+        </t>
+    </template>
+</odoo>

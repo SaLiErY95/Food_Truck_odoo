@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Report for vendor badges -->
+    <report id="report_food_badge" model="food.vendor.application" string="Vendor Badge"
+            name="food_truck_festival.report_badge" report_type="qweb-pdf" file="food_truck_festival.report_badge"/>
+
+    <template id="report_badge" name="Food Festival Badge">
+        <t t-call="web.external_layout">
+            <div class="page" style="width: 80mm; height: 50mm;">
+                <div style="text-align:center;">
+                    <h3><t t-esc="doc.event_id.name"/></h3>
+                    <h4><t t-esc="doc.partner_id.name or doc.company_name_fallback"/></h4>
+                    <p>Booth: <t t-esc="doc.booth_id.code or '-'"/></p>
+                    <p>Days: <t t-esc="', '.join([str(day.date) for day in doc.day_ids])"/></p>
+                    <div>
+                        <t t-if="doc.portal_token">
+                            <barcode code="${doc.get_checkin_url()}" type="QR"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

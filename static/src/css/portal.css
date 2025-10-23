@@ -1,0 +1,10 @@
+/*
+ * Styles for the Food Truck Festival portal pages.
+ */
+.o_portal_page h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.o_portal_page table {
+    width: 100%;
+}

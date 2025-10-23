@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        Automated action: when a sign request is completed, mark the
+        associated vendor application as signed and generate the sales
+        order/invoice.  This uses a base.automation on the sign.request
+        model.  In production you may implement a webhook instead.
+    -->
+    <record id="auto_sign_request_completed" model="base.automation">
+        <field name="name">Vendor Contract Signed</field>
+        <field name="model_id" ref="sign.model_sign_request"/>
+        <field name="trigger">on_write</field>
+        <field name="filter_domain">[("state", "=", "completed")]</field>
+        <field name="action_server_id" eval="False"/>
+        <field name="state">code</field>
+        <field name="code">
+            if record and record.state == 'completed':
+                apps = env['food.vendor.application'].search([('sign_request_id', '=', record.id)])
+                for app in apps:
+                    app.action_mark_signed()
+        </field>
+    </record>
+</odoo>

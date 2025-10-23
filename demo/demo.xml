@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Demo event -->
+    <record id="food_event_demo" model="event.event">
+        <field name="name">Street Food Festival Demo</field>
+        <field name="date_begin">2025-07-01 10:00:00</field>
+        <field name="date_end">2025-07-03 22:00:00</field>
+        <field name="is_published" eval="True"/>
+    </record>
+
+    <!-- Event days for demo event -->
+    <record id="food_event_day_demo1" model="food.event.day">
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="date">2025-07-01</field>
+    </record>
+    <record id="food_event_day_demo2" model="food.event.day">
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="date">2025-07-02</field>
+    </record>
+    <record id="food_event_day_demo3" model="food.event.day">
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="date">2025-07-03</field>
+    </record>
+
+    <!-- Booths for demo event -->
+    <record id="food_booth_demo1" model="food.booth">
+        <field name="name">Booth A1</field>
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="code">A1</field>
+        <field name="width_m">3</field>
+        <field name="depth_m">3</field>
+        <field name="power_kw">3</field>
+        <field name="water" eval="True"/>
+        <field name="sewage" eval="True"/>
+        <field name="price_per_day">100</field>
+        <field name="x_coord">10</field>
+        <field name="y_coord">20</field>
+    </record>
+    <record id="food_booth_demo2" model="food.booth">
+        <field name="name">Booth A2</field>
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="code">A2</field>
+        <field name="width_m">4</field>
+        <field name="depth_m">3</field>
+        <field name="power_kw">5</field>
+        <field name="water" eval="False"/>
+        <field name="sewage" eval="True"/>
+        <field name="price_per_day">150</field>
+        <field name="x_coord">30</field>
+        <field name="y_coord">20</field>
+    </record>
+    <!-- Additional booths omitted for brevity -->
+
+    <!-- Service products -->
+    <record id="product_power_extra" model="product.product">
+        <field name="name">Extra Power</field>
+        <field name="type">service</field>
+        <field name="list_price">20</field>
+        <field name="sale_ok" eval="True"/>
+    </record>
+    <record id="product_waste_fee" model="product.product">
+        <field name="name">Waste Disposal Fee</field>
+        <field name="type">service</field>
+        <field name="list_price">15</field>
+        <field name="sale_ok" eval="True"/>
+    </record>
+
+    <!-- Demo vendor partner -->
+    <record id="partner_vendor_demo" model="res.partner">
+        <field name="name">Demo Vendor SRL</field>
+        <field name="vat">RO123456</field>
+        <field name="phone">+40111222333</field>
+        <field name="email">demo@vendor.example.com</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <!-- Demo vendor application in new state -->
+    <record id="vendor_application_demo1" model="food.vendor.application">
+        <field name="partner_id" ref="partner_vendor_demo"/>
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="needs_power_kw">2</field>
+        <field name="needs_water" eval="True"/>
+        <field name="state">new</field>
+        <field name="day_ids" eval="[(6, 0, [ref('food_event_day_demo1'), ref('food_event_day_demo2')]) ]"/>
+    </record>
+
+    <!-- Demo vendor application in contract_sent state -->
+    <record id="vendor_application_demo2" model="food.vendor.application">
+        <field name="partner_id" ref="partner_vendor_demo"/>
+        <field name="event_id" ref="food_event_demo"/>
+        <field name="booth_id" ref="food_booth_demo1"/>
+        <field name="needs_power_kw">2</field>
+        <field name="state">contract_sent</field>
+        <field name="day_ids" eval="[(6, 0, [ref('food_event_day_demo1'), ref('food_event_day_demo2'), ref('food_event_day_demo3')]) ]"/>
+    </record>
+</odoo>

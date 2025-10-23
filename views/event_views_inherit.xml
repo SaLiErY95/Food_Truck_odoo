@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend event form to include food festival fields -->
+    <record id="view_event_form_food_festival" model="ir.ui.view">
+        <field name="name">event.event.form.food.festival</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Food Festival">
+                    <group>
+                        <field name="map_image" widget="image" class="oe_avatar"/>
+                        <field name="rules_html"/>
+                        <field name="checkin_instructions"/>
+                        <field name="default_kwh_per_booth"/>
+                    </group>
+                    <group string="Event Days">
+                        <field name="food_event_day_ids" widget="one2many_list">
+                            <tree>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <!-- No need to inject a model field here; food_event_day_ids is defined in Python. -->
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_food_vendor_application_organiser,food.vendor.application organiser,model_food_vendor_application,food_truck_festival.group_food_organiser,1,1,1,1
+access_food_vendor_application_coordinator,food.vendor.application coordinator,model_food_vendor_application,food_truck_festival.group_food_coordinator,1,1,1,0
+access_food_vendor_application_logistics,food.vendor.application logistics,model_food_vendor_application,food_truck_festival.group_food_logistics,1,0,0,0
+access_food_vendor_application_cashier,food.vendor.application cashier,model_food_vendor_application,food_truck_festival.group_food_cashier,1,0,0,0
+access_food_booth_organiser,food.booth organiser,model_food_booth,food_truck_festival.group_food_organiser,1,1,1,1
+access_food_booth_coordinator,food.booth coordinator,model_food_booth,food_truck_festival.group_food_coordinator,1,1,1,0
+access_food_booth_logistics,food.booth logistics,model_food_booth,food_truck_festival.group_food_logistics,1,0,0,0
+access_food_service_line_organiser,food.service.line organiser,model_food_service_line,food_truck_festival.group_food_organiser,1,1,1,1
+access_food_service_line_coordinator,food.service.line coordinator,model_food_service_line,food_truck_festival.group_food_coordinator,1,1,1,0
+access_food_service_line_logistics,food.service.line logistics,model_food_service_line,food_truck_festival.group_food_logistics,1,0,0,0

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Action for booths -->
+    <record id="action_food_booth" model="ir.actions.act_window">
+        <field name="name">Booths</field>
+        <field name="res_model">food.booth</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first booth</p>
+        </field>
+    </record>
+
+    <!-- Tree view -->
+    <record id="view_food_booth_tree" model="ir.ui.view">
+        <field name="name">food.booth.tree</field>
+        <field name="model">food.booth</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="event_id"/>
+                <field name="code"/>
+                <field name="area_sqm"/>
+                <field name="power_kw"/>
+                <field name="water"/>
+                <field name="sewage"/>
+                <field name="price_per_day"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_food_booth_form" model="ir.ui.view">
+        <field name="name">food.booth.form</field>
+        <field name="model">food.booth</field>
+        <field name="arch" type="xml">
+            <form string="Booth">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="event_id"/>
+                        <field name="code"/>
+                        <field name="width_m"/>
+                        <field name="depth_m"/>
+                        <field name="area_sqm" readonly="1"/>
+                        <field name="power_kw"/>
+                        <field name="water"/>
+                        <field name="sewage"/>
+                        <field name="price_per_day"/>
+                        <field name="x_coord"/>
+                        <field name="y_coord"/>
+                        <field name="state"/>
+                        <field name="application_id" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

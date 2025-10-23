@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main menu for the Food Truck Festival module -->
+    <menuitem id="menu_food_root" name="Street Food" sequence="30" groups="food_truck_festival.group_food_organiser,food_truck_festival.group_food_coordinator,food_truck_festival.group_food_logistics"/>
+
+    <menuitem id="menu_food_applications" name="Vendor Applications" parent="menu_food_root" sequence="10" action="action_food_vendor_application" groups="food_truck_festival.group_food_organiser,food_truck_festival.group_food_coordinator,food_truck_festival.group_food_logistics"/>
+    <menuitem id="menu_food_booths" name="Booths" parent="menu_food_root" sequence="20" action="action_food_booth" groups="food_truck_festival.group_food_organiser,food_truck_festival.group_food_coordinator,food_truck_festival.group_food_logistics"/>
+    <menuitem id="menu_food_days" name="Event Days" parent="menu_food_root" sequence="30" action="action_food_event_day" groups="food_truck_festival.group_food_organiser,food_truck_festival.group_food_coordinator"/>
+</odoo>

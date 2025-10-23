@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Sign template for vendor contract.  In a real deployment this
+         would embed the full contract PDF with merge tags.  Here we
+         define a basic template so the sign.request API can be called. -->
+    <!-- Custom category for food festival contracts -->
+    <record id="sign_category_food_contract" model="sign.template.category">
+        <field name="name">Food Festival Contract</field>
+    </record>
+
+    <record id="sign_template_vendor_contract" model="sign.template">
+        <field name="name">Vendor Contract</field>
+        <field name="category_id" ref="food_truck_festival.sign_category_food_contract"/>
+        <field name="ref">food_truck_festival.vendor_contract</field>
+        <field name="redirect_url">/my</field>
+        <!-- Binary file is left empty; in production you would embed a PDF -->
+        <field name="datas" type="binary">""</field>
+        <field name="datas_fname">vendor_contract.pdf</field>
+    </record>
+
+    <!-- Define a signer role so that the sign request can attach the partner -->
+    <record id="sign_role_vendor" model="sign.item.role">
+        <field name="name">Vendor</field>
+        <field name="template_id" ref="sign_template_vendor_contract"/>
+        <field name="sequence" eval="1"/>
+    </record>
+</odoo>

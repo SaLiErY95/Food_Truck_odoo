@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Sequence for vendor application numbers -->
+    <record id="seq_food_vendor_application" model="ir.sequence">
+        <field name="name">Food Vendor Application</field>
+        <field name="code">food.vendor.application</field>
+        <field name="prefix">FTF-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>
