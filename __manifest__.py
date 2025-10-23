@@ -1,12 +1,3 @@
-"""
-Manifest for the Food Truck Festival module.
-
-This manifest declares the module's metadata, dependencies and data
-files.  The version number follows the Odoo semantic versioning
-convention: major.minor.patch.series.  See the README in
-static/description/index.html for usage instructions and screenshots.
-"""
-
 {
     'name': 'Food Truck Festival',
     'version': '18.0.1.0',
