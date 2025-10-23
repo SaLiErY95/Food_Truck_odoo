@@ -11,6 +11,10 @@
         module.
         Portal Vendor: limited portal access to own records.
     -->
+    <record id="module_category_food_truck" model="ir.module.category">
+        <field name="name">Street Food / Festival</field>
+        <field name="sequence" eval="60"/>
+    </record>
     <record id="group_food_organiser" model="res.groups">
         <field name="name">Food Festival Organiser</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
