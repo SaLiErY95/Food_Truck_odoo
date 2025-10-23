@@ -1,6 +1,6 @@
 {
     'name': 'Food Truck Festival',
-    'version': '18.0.1.0',
+    'version': '18.0.1.1',
     'author': 'AC Check‑OUT Solution SRL',
     'website': 'https://www.check-outeam.ro',
     'summary': 'Vendor registration, booth allocation, contracts and invoicing for street food festivals',
